@@ -30,6 +30,7 @@ module "nic" {
   nic_name            = "nic"
   pip_id              = module.pip.pip_id
   subnet_id           = module.vnet.subnet_id
+  depends_on          = [module.vnet]
 
 
 }
@@ -39,4 +40,14 @@ module "nsg" {
   resource_group_name = module.resource_group.resource_group_name
   location            = module.resource_group.location
   subnet_id           = module.vnet.subnet_id
+  depends_on          = [module.vnet]
+}
+module "vm" {
+  source              = "./compute"
+  vm_name             = "vm1"
+  resource_group_name = module.resource_group.resource_group_name
+  location            = module.resource_group.location
+  nic_id              = module.nic.nic_id
+  username            = "Gaurav"
+  depends_on          = [module.resource_group, module.vnet, module.nic]
 }
