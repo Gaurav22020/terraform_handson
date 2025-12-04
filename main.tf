@@ -33,3 +33,10 @@ module "nic" {
 
 
 }
+module "nsg" {
+  source              = "./securitygroup"
+  nsg_name            = "nsg"
+  resource_group_name = module.resource_group.resource_group_name
+  location            = module.resource_group.location
+
+}
