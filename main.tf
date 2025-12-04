@@ -23,3 +23,13 @@ module "pip" {
   location            = module.resource_group.location
   depends_on          = [module.resource_group]
 }
+module "nic" {
+  source              = "./interfacecard"
+  resource_group_name = module.resource_group.resource_group_name
+  location            = module.resource_group.location
+  nic_name            = "nic"
+  pip_id              = module.pip.pip_id
+  subnet_id           = module.vnet.subnet_id
+
+
+}
